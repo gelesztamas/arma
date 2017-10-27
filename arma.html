@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="arma.css">
+        <script src="Chart.min.js"></script> 
+        <script src="arma.js"></script> 
+        <title>ARMA rendszer</title>
+    </head>
+    <body>
+            <h1>ARMA rendszer (html+js verzió)</h1>
+            <p style="margin-bottom: 0;">készítette: Haba Tamás</p>
+            <p>utoljára frissítve: 2017.10.27. <a href="sugo.html">súgó</a></p> 
+        <table>
+            <tr>
+                <td>
+                    <br> AR együtthatók <br>
+                    <textarea name="textarea_ad" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                </td>
+                <td>
+                    <br> MA együtthatók <br>
+                    <textarea name="textarea_bd" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                </td>
+                <td rowspan="2">
+                    Grafikon típusa:
+                    <select id="select_grafikon_tipus" onchange="grafikon_tipus(this);">
+                        <option value="pontok">Csak pontok</option>
+                        <option value="lepcsos">Lépcsős</option>
+                        <option value="egyenes">Egyenes</option>
+                        <option value="gorbe">Görbe</option>
+                    </select> 
+                    <canvas id="grafikon" width="800" height="400"></canvas>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gerjesztés <br>
+                    <textarea name="textarea_u" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                </td>
+                <td>
+                    Kimenet <br>
+                    <textarea name="textarea_y" cols="20" rows="15"></textarea>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

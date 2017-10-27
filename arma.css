@@ -1,0 +1,28 @@
+body {
+  margin: 10px;
+  font-family: Sans-serif;
+  background-color: beige;
+}
+
+h1 {
+  align-content: center;
+  margin-block-end: 0;
+}
+
+p {
+  margin-top: 0;
+}
+
+canvas {
+  background-color: white;
+  box-shadow: 10px 10px 5px #888888;
+}
+
+textarea {
+    resize: none;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
