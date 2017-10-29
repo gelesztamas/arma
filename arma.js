@@ -1,10 +1,10 @@
 // az arma rendszer példányunk
-var rendszer = undefined;
+var rendszer;
 
-// bemenetek
+// a bemeneti értékeket tartalmazó lista
 var bemenetek = [];
 
-// grafikon
+// a Chart.js által létrehozott grafikon példányunk
 var grafikon;
 
 /**
@@ -62,32 +62,47 @@ function Arma(bd, ad){
     };
 }
 
-// textarea számlistává alakítása
+/**
+ * Egy textarea tartalmának átalakítása egy számokkal feltöltött listává.
+ * Minden számot tartalmazó sor a beviteli mezőben, bekerül a listába.
+ * 
+ * @param textarea A soronként 1-1 számot tartalmazó szövegbeviteli mező.
+ * @returns A számokat tartalmazó lista.
+ */
 function text2numbers(textarea){
+    // szétválasztjuk sorokra a szöveget
     var sorok = textarea.value.split('\n');
+    
+    // ha egy sor számot tartalmaz, akkor azt a listába írjuk
     var lista = [];
     for(var i=0; i<sorok.length; i++){
         if(!isNaN(parseFloat(sorok[i]))){
              lista.push(parseFloat(sorok[i]));
         }
     }
+    
     return lista;
 }
 
-// kimenetek kiszámítása
+/**
+ * A megadott rendszer futtatása a megadott bemenettel, a kimeneti mező
+ * és a grafikon frissítése.
+ */
 function futtat(){
+    // bemenetek értelmezése és a kimenetek számítása
     var textarea_u = document.getElementsByName("textarea_u")[0];
-    var textarea_y = document.getElementsByName("textarea_y")[0];
     bemenetek = text2numbers(textarea_u);
     rendszer.shiftreg_init();
     var y=[];
     for(var i=0; i<bemenetek.length; i++){
        y.push(rendszer.gerjeszt(bemenetek[i]));
     }
+    
+    // kimenetek szöveges megjelenítése
+    var textarea_y = document.getElementsByName("textarea_y")[0];
     textarea_y.value = y.join("\n");
     
-    
-    // grafikonon való kirajzolás
+    // grafikon frissítése az új kimenetekkel
     grafikon.data.datasets[0].data = [];
     grafikon.data.datasets[1].data = [];
                
@@ -99,7 +114,10 @@ function futtat(){
     grafikon.update();
 }
 
-// rendszer inicializálása
+/**
+ * A rendszerünk inicializálása a megadott együtthatók alapján. A függvény
+ * automatikusan futtatja is a rendszert a létrehozás után.
+ */
 function rendszer_init(){
     // együtthatók kiszedése a bemeneti mezőkből
     var textarea_ad = document.getElementsByName("textarea_ad")[0];
@@ -118,9 +136,16 @@ function rendszer_init(){
     futtat();
 }
 
-// gomblenyomás handler
+/**
+ * Billentyűlenyomás callback a szövegbeviteli mezőkön. Ellenőrzni, hogy
+ * történt-e változás, és ha igen, hol. (A rendszer együtthatói változtak-e
+ * vagy csak a bemeneti értékek.) A változástól függően újrainicializálja
+ * a rendszert vagy újraszámolja a kimeneteket.
+ * 
+ * @param hol Az a beviteli mező, ahol a billentyűlenyomás történt.
+ */
 function gombnyomas(hol){
-    // megnézzük, hol van változás
+    // megnézzük, hol történt billentyűlenyomás
     var elozo_lista;
     switch(hol.name){
         case "textarea_ad":
@@ -151,8 +176,14 @@ function gombnyomas(hol){
     }
 }
 
-//
+/** 
+ * Választás callback, ami akkor hívódik meg, amikor valamelyik grafikon
+ * típusa meg lett változtatva.
+ * 
+ * @param selector Az a legördülő választó, ahol változás történt.
+ */
 function grafikon_tipus(selector){
+    // melyik grafikon típusa lett megváltoztatva?
     var dataset;
     switch(selector.id){
         case "select_grafikon_tipus_y":
@@ -163,6 +194,7 @@ function grafikon_tipus(selector){
             break;
     }
     
+    // milyen típus lett kiválasztva?
     switch(selector.value){
         case "pontok":
             dataset.showLine = false;
@@ -183,10 +215,15 @@ function grafikon_tipus(selector){
             dataset.lineTension = 0.4;
             break;
     }
+    
+    // grafikon frissítése
     grafikon.update();
 }
 
-// a szkript belépési pontja
+/**
+ * A szkript belépési pontja. A html dokumentum betöltésekor kerül meghívásra,
+ * a legelső init funkciókat hajtja végre.
+ */
 function arma_main(){
     // grafikon létrehozása
     var ctx = document.getElementById("grafikon");
@@ -223,5 +260,5 @@ function arma_main(){
     grafikon_tipus(document.getElementById("select_grafikon_tipus_y"));
 }
 
-// szkript indítása, ha az oldal betöltődött
+// belépési pont meghívása, ha a html dokumentum betöltődött
 document.addEventListener("DOMContentLoaded", arma_main);
