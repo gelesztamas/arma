@@ -194,15 +194,15 @@ function arma_main(){
             }]
         }
     };
-    var data = {datasets:[{borderColor: "blue",
-                           backgroundColor: "blue",
-                           fill:false,
-                           label:"u(t)",
-                           data:[]},
-                          {borderColor: "red",
+    var data = {datasets:[{borderColor: "red",
                            backgroundColor: "red",
                            fill:false,
                            label:"y(t)",
+                           data:[]},
+                          {borderColor: "blue",
+                           backgroundColor: "blue",
+                           fill:false,
+                           label:"u(t)",
                            data:[]}
                    ]};
     grafikon = new Chart(ctx, {
