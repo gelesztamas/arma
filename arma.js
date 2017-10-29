@@ -228,7 +228,13 @@ function arma_main(){
         scales: {
             xAxes: [{
                 type: 'linear',
-                position: 'bottom'
+                position: 'bottom',
+                ticks: {beginAtZero:true}
+            }],
+            yAxes: [{
+                type: 'linear',
+                position: 'left',
+                ticks: {beginAtZero:true}
             }]
         }
     };
