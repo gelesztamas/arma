@@ -230,7 +230,11 @@ function arma_main(){
             xAxes: [{
                 type: 'linear',
                 position: 'bottom',
-                ticks: {beginAtZero:true}
+                ticks: {beginAtZero:true},
+                scaleLabel: {
+                    display: true,
+                    labelString: 't'
+                }
             }],
             yAxes: [{
                 type: 'linear',
