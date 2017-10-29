@@ -153,30 +153,34 @@ function gombnyomas(hol){
 
 //
 function grafikon_tipus(selector){
+    var dataset;
+    switch(selector.id){
+        case "select_grafikon_tipus_y":
+            dataset = grafikon.data.datasets[0];
+            break;
+        case "select_grafikon_tipus_u":
+            dataset = grafikon.data.datasets[1];
+            break;
+    }
+    
     switch(selector.value){
         case "pontok":
-            grafikon.options.showLines = false;
-            grafikon.data.datasets[0].steppedLine = false;
-            grafikon.data.datasets[1].steppedLine = false;
+            dataset.showLine = false;
+            dataset.steppedLine = false;
             break;
         case "lepcsos":
-            grafikon.options.showLines = true;
-            grafikon.data.datasets[0].steppedLine = true;
-            grafikon.data.datasets[1].steppedLine = true;
+            dataset.showLine = true;
+            dataset.steppedLine = true;
             break;
         case "egyenes":
-            grafikon.options.showLines = true;
-            grafikon.data.datasets[0].steppedLine = false;
-            grafikon.data.datasets[1].steppedLine = false;
-            grafikon.data.datasets[0].lineTension = 0;
-            grafikon.data.datasets[1].lineTension = 0;
+            dataset.showLine = true;
+            dataset.steppedLine = false;
+            dataset.lineTension = 0;
             break;
         case "gorbe":
-            grafikon.options.showLines = true;
-            grafikon.data.datasets[0].steppedLine = false;
-            grafikon.data.datasets[1].steppedLine = false;
-            grafikon.data.datasets[0].lineTension = 0.4;
-            grafikon.data.datasets[1].lineTension = 0.4;
+            dataset.showLine = true;
+            dataset.steppedLine = false;
+            dataset.lineTension = 0.4;
             break;
     }
     grafikon.update();
@@ -215,7 +219,8 @@ function arma_main(){
     rendszer_init();
     
     //grafikon típus beállítása
-    grafikon_tipus(document.getElementById("select_grafikon_tipus"));
+    grafikon_tipus(document.getElementById("select_grafikon_tipus_u"));
+    grafikon_tipus(document.getElementById("select_grafikon_tipus_y"));
 }
 
 // szkript indítása, ha az oldal betöltődött

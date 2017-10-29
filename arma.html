@@ -10,7 +10,7 @@
     <body>
             <h1>ARMA rendszer (html+js verzió)</h1>
             <p style="margin-bottom: 0;">készítette: Haba Tamás</p>
-            <p>utoljára frissítve: 2017.10.27. <a href="sugo.html">súgó</a></p> 
+            <p>utoljára frissítve: 2017.10.28. <a href="sugo.html">súgó</a></p> 
         <table>
             <tr>
                 <td>
@@ -22,8 +22,15 @@
                     <textarea name="textarea_bd" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
                 </td>
                 <td rowspan="2">
-                    Grafikon típusa:
-                    <select id="select_grafikon_tipus" onchange="grafikon_tipus(this);">
+                    Gerjesztés megjelenítése:
+                    <select id="select_grafikon_tipus_u" onchange="grafikon_tipus(this);">
+                        <option value="pontok">Csak pontok</option>
+                        <option value="lepcsos">Lépcsős</option>
+                        <option value="egyenes">Egyenes</option>
+                        <option value="gorbe">Görbe</option>
+                    </select> 
+                    Kimenet megjelenítése:
+                    <select id="select_grafikon_tipus_y" onchange="grafikon_tipus(this);">
                         <option value="pontok">Csak pontok</option>
                         <option value="lepcsos">Lépcsős</option>
                         <option value="egyenes">Egyenes</option>
