@@ -86,26 +86,27 @@ function text2numbers(textarea){
  * és a grafikon frissítése.
  */
 function futtat(){
-    // előző futtatás szöveges és grafikus megjelenítésének törlése
-    var textarea_y = document.getElementsByName("textarea_y")[0];
-    textarea_y.value = "";
-    grafikon.data.datasets[0].data = [];
-    grafikon.data.datasets[1].data = [];
-    grafikon.update();
-    
     // bemenetek értelmezése
     var textarea_u = document.getElementsByName("textarea_u")[0];
     bemenetek = text2numbers(textarea_u);
     
     // kimenetek számítása
     var y=[];
-    rendszer.shiftreg_init();
-    for(var i=0; i<bemenetek.length; i++){
-       y.push(rendszer.gerjeszt(bemenetek[i]));
+    try{
+        rendszer.shiftreg_init();
+        for(var i=0; i<bemenetek.length; i++){
+           y.push(rendszer.gerjeszt(bemenetek[i]));
+        }
+    } catch (err){
+        // ha nem sikerült kimenetet számítani, akkor a bemenetet se mutassuk
+        bemenetek = [];
     }
     
-    // kimenetek szöveges megjelenítése
+    // szöveges és grafikus megjelenítés
+    var textarea_y = document.getElementsByName("textarea_y")[0];
     textarea_y.value = y.join("\n");
+    grafikon.data.datasets[0].data = [];
+    grafikon.data.datasets[1].data = [];
     
     // be- és kimenetek grafikus megjelenítése
     for(var i=0; i<bemenetek.length; i++){
