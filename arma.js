@@ -21,7 +21,7 @@ function Arma(bd, ad){
     this.bd = bd;         // mozgóátlag együtthatók (r+1 darab)
     
     /**
-     * Shiftregiszter inicializálása. (nullákkal feltöltve)
+     * Shiftregiszterek inicializálása. (nullákkal feltöltve)
      */
     this.shiftreg_init = function(){
         this.y = new Array(this.n); // autoregresszív shiftregiszter (n kimenet)
@@ -29,9 +29,6 @@ function Arma(bd, ad){
         this.u = new Array(this.r); // mozgóátlag shiftregiszter (r bemenet)
         for(var i=0; i<this.u.length; i++) this.u[i]=0;
     };
-    
-    // rögtön nullázzuk is a shiftregisztereket
-    this.shiftreg_init();
     
     /**
      * Rendszer futtatása.
@@ -89,28 +86,32 @@ function text2numbers(textarea){
  * és a grafikon frissítése.
  */
 function futtat(){
-    // bemenetek értelmezése és a kimenetek számítása
+    // előző futtatás szöveges és grafikus megjelenítésének törlése
+    var textarea_y = document.getElementsByName("textarea_y")[0];
+    textarea_y.value = "";
+    grafikon.data.datasets[0].data = [];
+    grafikon.data.datasets[1].data = [];
+    grafikon.update();
+    
+    // bemenetek értelmezése
     var textarea_u = document.getElementsByName("textarea_u")[0];
     bemenetek = text2numbers(textarea_u);
-    rendszer.shiftreg_init();
+    
+    // kimenetek számítása
     var y=[];
+    rendszer.shiftreg_init();
     for(var i=0; i<bemenetek.length; i++){
        y.push(rendszer.gerjeszt(bemenetek[i]));
     }
     
     // kimenetek szöveges megjelenítése
-    var textarea_y = document.getElementsByName("textarea_y")[0];
     textarea_y.value = y.join("\n");
     
-    // grafikon frissítése az új kimenetekkel
-    grafikon.data.datasets[0].data = [];
-    grafikon.data.datasets[1].data = [];
-               
+    // be- és kimenetek grafikus megjelenítése
     for(var i=0; i<bemenetek.length; i++){
-        grafikon.data.datasets[0].data.push({x: i, y: bemenetek[i]});
-        grafikon.data.datasets[1].data.push({x: i, y: y[i]});
+        grafikon.data.datasets[0].data.push({x: i, y: y[i]});
+        grafikon.data.datasets[1].data.push({x: i, y: bemenetek[i]});
     }
-    
     grafikon.update();
 }
 
@@ -126,11 +127,7 @@ function rendszer_init(){
     var ad=text2numbers(textarea_ad), bd=text2numbers(textarea_bd);
     
     // új rendszer létrehozása
-    if(bd.length > 0){
-        rendszer = new Arma(bd, ad);
-    } else {
-        rendszer = new Arma([0], ad);
-    }
+    rendszer = new Arma(bd, ad);
     
     // rendszer futtatása
     futtat();
@@ -252,12 +249,12 @@ function arma_main(){
         options: options
     });
     
-    // rendszer init
-    rendszer_init();
-    
     //grafikon típus beállítása
     grafikon_tipus(document.getElementById("select_grafikon_tipus_u"));
     grafikon_tipus(document.getElementById("select_grafikon_tipus_y"));
+    
+    // rendszer init
+    rendszer_init();
 }
 
 // belépési pont meghívása, ha a html dokumentum betöltődött
