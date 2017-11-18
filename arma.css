@@ -26,3 +26,11 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
+
+td {
+    vertical-align: top;
+}
+
+#td_sine {
+    background-color: white;
+}

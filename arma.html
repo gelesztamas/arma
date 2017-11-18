@@ -10,18 +10,16 @@
     <body>
             <h1>ARMA rendszer (html+js verzió)</h1>
             <p style="margin-bottom: 0;">készítette: Haba Tamás</p>
-            <p>utoljára frissítve: 2017.10.29. <a href="sugo.html">súgó</a></p> 
+            <p>utoljára frissítve: 2017.11.19. <a href="sugo.html">súgó</a></p> 
         <table>
             <tr>
                 <td>
                     <br> AR együtthatók <br>
-                    <textarea name="textarea_ad" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
                 </td>
                 <td>
                     <br> MA együtthatók <br>
-                    <textarea name="textarea_bd" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
                 </td>
-                <td rowspan="2">
+                <td>
                     Gerjesztés megjelenítése:
                     <select id="select_grafikon_tipus_u" onchange="grafikon_tipus(this);">
                         <option value="pontok">Csak pontok</option>
@@ -35,17 +33,47 @@
                         <option value="lepcsos">Lépcsős</option>
                         <option value="egyenes">Egyenes</option>
                         <option value="gorbe">Görbe</option>
-                    </select> 
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="textarea_ad" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                </td>
+                <td>
+                    <textarea name="textarea_bd" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                </td>
+                <td rowspan="3">
                     <canvas id="grafikon" width="800" height="400"></canvas>
                 </td>
             </tr>
             <tr>
                 <td>
-                    Gerjesztés <br>
-                    <textarea name="textarea_u" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                    Gerjesztés
+                    <div id="button_sine"><input onclick="sine_inputs();" type="image" src="sine.png" width="16" height="16"/></div>
+                    <div id="button_list"><input onclick="list_inputs();" type="image" src="list.png" width="16" height="16"/></div>
                 </td>
                 <td>
-                    Kimenet <br>
+                    Kimenet
+                </td>
+            </tr>
+            <tr>
+                <td id="td_list">
+                    <textarea name="textarea_u" onkeyup="gombnyomas(this);" cols="20" rows="15"></textarea>
+                </td>
+                <td id="td_sine">
+                    lépések: <div id="n" style="display:inline"></div><br>
+                    <input onchange="slider(this, 'n');" oninput="slider(this);" type="range" min="2" max="1000" value="100" class="slider" id="range_N"> <br>
+                    jel T=<div id="t1" style="display:inline"></div><br>
+                    <input onchange="slider(this, 't1');" oninput="slider(this);" type="range" min="4" max="100" value="50" class="slider" id="range_T1"> <br>
+                    jel A=<div id="a1" style="display:inline"></div><br>
+                    <input onchange="slider(this, 'a1');" oninput="slider(this);" type="range" min="0" max="100" value="0" class="slider" id="range_A1"> <br>
+                    zaj T=<div id="t2" style="display:inline"></div><br>
+                    <input onchange="slider(this, 't2');" oninput="slider(this);" type="range" min="4" max="100" value="10" class="slider" id="range_T2"> <br>
+                    zaj A=<div id="a2" style="display:inline"></div><br>
+                    <input onchange="slider(this, 'a2');" oninput="slider(this);" type="range" min="0" max="100" value="0" class="slider" id="range_A2"> <br>
+                </td>
+                <td>
                     <textarea name="textarea_y" cols="20" rows="15"></textarea>
                 </td>
             </tr>

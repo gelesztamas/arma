@@ -197,20 +197,24 @@ function grafikon_tipus(selector){
         case "pontok":
             dataset.showLine = false;
             dataset.steppedLine = false;
+            dataset.pointRadius = 2;
             break;
         case "lepcsos":
             dataset.showLine = true;
             dataset.steppedLine = true;
+            dataset.pointRadius = 2;
             break;
         case "egyenes":
             dataset.showLine = true;
             dataset.steppedLine = false;
             dataset.lineTension = 0;
+            dataset.pointRadius = 2;
             break;
         case "gorbe":
             dataset.showLine = true;
             dataset.steppedLine = false;
             dataset.lineTension = 0.4;
+            dataset.pointRadius = 0;
             break;
     }
     
@@ -219,10 +223,73 @@ function grafikon_tipus(selector){
 }
 
 /**
+ * Bemenetek megadása szinuszos gerjesztésekkel.
+ */
+function sine_inputs(){
+    document.getElementById("button_sine").style.display = "none";
+    document.getElementById("button_list").style.display = "inline";
+    document.getElementById("td_sine").style.display = "block";
+    document.getElementById("td_list").style.display = "none";
+}
+
+/**
+ * Bemenetek megadása listán.
+ */
+function list_inputs(){
+    document.getElementById("button_sine").style.display = "inline";
+    document.getElementById("button_list").style.display = "none";
+    document.getElementById("td_sine").style.display = "none";
+    document.getElementById("td_list").style.display = "block";
+}
+
+/**
+ * Csúszka feliratok frissítése.
+ */
+function slider_feliratok(){
+    document.getElementById("n").innerHTML = document.getElementById("range_N").value;
+    document.getElementById("t1").innerHTML = document.getElementById("range_T1").value;
+    document.getElementById("a1").innerHTML = document.getElementById("range_A1").value;
+    document.getElementById("t2").innerHTML = document.getElementById("range_T2").value;
+    document.getElementById("a2").innerHTML = document.getElementById("range_A2").value;
+}
+
+/**
+ * Csúszka mozgatása történt.
+ */
+function slider(range_input){
+    slider_feliratok();
+    
+    var n = document.getElementById("range_N").value;
+    var t1 = document.getElementById("range_T1").value;
+    var a1 = document.getElementById("range_A1").value;
+    var t2 = document.getElementById("range_T2").value;
+    var a2 = document.getElementById("range_A2").value;
+    
+    var szinuszos_bemenetek = [];
+    for(var k=0; k<n; k++){
+        var uj_jel;
+        uj_jel = a1*Math.sin(k*2*Math.PI/t1);
+        uj_jel += a2*Math.sin(k*2*Math.PI/t2);
+        szinuszos_bemenetek.push(uj_jel);
+    }
+    
+    var textarea_u = document.getElementsByName("textarea_u")[0];
+    textarea_u.value = szinuszos_bemenetek.join("\n");
+    
+    futtat();
+}
+
+/**
  * A szkript belépési pontja. A html dokumentum betöltésekor kerül meghívásra,
  * a legelső init funkciókat hajtja végre.
  */
 function arma_main(){
+    // alapból listán megadott bemenet
+    list_inputs();
+    
+    // default slider értékek megjelenítése
+    slider_feliratok();
+    
     // grafikon létrehozása
     var ctx = document.getElementById("grafikon");
     var options = {
